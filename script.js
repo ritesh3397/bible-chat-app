@@ -1,12 +1,29 @@
-// Daily verse (static)
-document.getElementById("verse").innerText =
-  "John 3:16 - For God so loved the world...";
-
-// Fake AI (abhi ke liye)
-function askAI() {
+async function askAI() {
   let q = document.getElementById("question").value;
-  
-  let response = "Pray and trust God. (" + q + ")";
-  
-  document.getElementById("answer").innerText = response;
+
+  document.getElementById("answer").innerText = "Thinking...";
+
+  try {
+    let res = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ question: q })
+    });
+
+    let data = await res.json();
+
+    // HuggingFace response handle
+    let answer =
+      data[0]?.generated_text ||
+      data.generated_text ||
+      "No response";
+
+    document.getElementById("answer").innerText = answer;
+
+  } catch (err) {
+    document.getElementById("answer").innerText = "Error connecting AI";
+    console.error(err);
+  }
 }
