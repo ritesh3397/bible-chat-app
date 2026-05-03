@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        inputs: "Answer from Bible perspective: " + question
+        inputs: "Answer from a Bible perspective: " + question
       })
     }
   );
