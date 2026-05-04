@@ -1,27 +1,35 @@
-async function askAI() {
-  let q = document.getElementById("question").value;
+export default async function handler(req, res) {
+  try {
+    const { question } = req.body;
 
-  document.getElementById("answer").innerText = "Thinking...";
+    const response = await fetch(
+      "https://api-inference.huggingface.co/models/google/flan-t5-base",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + process.env.HF_TOKEN,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          inputs: "Answer in simple words from Bible perspective: " + question,
+        }),
+      }
+    );
 
-  let res = await fetch("/api/chat", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ question: q })
-  });
+    const text = await response.text();
 
-  let data = await res.json();
+    console.log("HF RAW:", text);
 
-  if (data.error) {
-    document.getElementById("answer").innerText = data.error;
-    return;
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      return res.status(200).json({ error: "HF not ready, try again" });
+    }
+
+    return res.status(200).json(data);
+
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
-
-  let answer =
-    data[0]?.generated_text ||
-    data.generated_text ||
-    "No response";
-
-  document.getElementById("answer").innerText = answer;
 }
