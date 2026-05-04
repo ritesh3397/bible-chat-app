@@ -6,15 +6,15 @@ async function askAI() {
   let res = await fetch("/api/chat", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify({ question: q }),
+    body: JSON.stringify({ question: q })
   });
 
   let data = await res.json();
 
   if (data.error) {
-    document.getElementById("answer").innerText = "Error: " + data.error;
+    document.getElementById("answer").innerText = data.error;
     return;
   }
 
