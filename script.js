@@ -14,7 +14,7 @@ async function askAI() {
   let data = await res.json();
 
   let answer =
-    data.choices?.[0]?.message?.content || "No response";
+    data.choices?.[0]?.message?.content || data.error || "No response";
 
   document.getElementById("answer").innerText = answer;
 }
