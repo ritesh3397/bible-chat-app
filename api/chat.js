@@ -1,9 +1,13 @@
 export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Only POST allowed" });
+  }
+
   try {
     const { question } = req.body;
 
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/google/flan-t5-base",
+      "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2",
       {
         method: "POST",
         headers: {
@@ -11,20 +15,23 @@ export default async function handler(req, res) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          inputs: "Answer in simple words from Bible perspective: " + question,
+          inputs: `<s>[INST] Answer in simple words from a Bible perspective: ${question} [/INST]`,
         }),
       }
     );
 
     const text = await response.text();
-
     console.log("HF RAW:", text);
 
     let data;
     try {
       data = JSON.parse(text);
     } catch {
-      return res.status(200).json({ error: "HF not ready, try again" });
+      return res.status(200).json({ error: "Model loading, try again..." });
+    }
+
+    if (data.error) {
+      return res.status(200).json({ error: data.error });
     }
 
     return res.status(200).json(data);
