@@ -13,15 +13,8 @@ async function askAI() {
 
   let data = await res.json();
 
-  if (data.error) {
-    document.getElementById("answer").innerText = data.error;
-    return;
-  }
-
   let answer =
-    data[0]?.generated_text ||
-    data.generated_text ||
-    "No response";
+    data.choices?.[0]?.message?.content || "No response";
 
   document.getElementById("answer").innerText = answer;
 }
