@@ -9,3 +9,85 @@ input {
 button {
   padding: 10px;
 }
+/* === UPGRADE UI === */
+
+body {
+  background: #0f172a;
+  color: white;
+}
+
+/* cards */
+.card {
+  background: #1e293b;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* buttons */
+button, .btn {
+  background: #22c55e;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: bold;
+  color: black;
+}
+
+/* chat bubbles */
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-msg {
+  align-self: flex-end;
+  background: #22c55e;
+  color: black;
+  padding: 10px;
+  border-radius: 12px;
+  max-width: 70%;
+}
+
+.ai-msg {
+  align-self: flex-start;
+  background: #334155;
+  padding: 10px;
+  border-radius: 12px;
+  max-width: 70%;
+}
+
+/* input bar fix */
+.input-bar {
+  position: fixed;
+  bottom: 60px;
+  width: 100%;
+  display: flex;
+  background: #020617;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: #1e293b;
+  color: white;
+}
+
+/* nav bar */
+.nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #020617;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+}
