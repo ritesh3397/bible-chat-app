@@ -1,20 +1,55 @@
 async function askAI() {
-  let q = document.getElementById("question").value;
+  let input = document.getElementById("question");
+  let q = input.value.trim();
+  let answerBox = document.getElementById("answer");
 
-  document.getElementById("answer").innerText = "Thinking...";
+  if (!q) return;
 
-  let res = await fetch("/api/chat", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ question: q })
-  });
+  // clear input
+  input.value = "";
 
-  let data = await res.json();
+  // 👉 user message bubble
+  answerBox.innerHTML += `<div class="user-msg">${q}</div>`;
+  scrollBottom();
 
-  let answer =
-    data.choices?.[0]?.message?.content || data.error || "No response";
+  // 👉 typing indicator
+  answerBox.innerHTML += `<div class="ai-msg typing">Typing...</div>`;
+  scrollBottom();
 
-  document.getElementById("answer").innerText = answer;
+  try {
+    let res = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ question: q })
+    });
+
+    let data = await res.json();
+
+    // remove typing
+    document.querySelector(".typing")?.remove();
+
+    let answer =
+      data.choices?.[0]?.message?.content ||
+      data.error ||
+      "No response";
+
+    // 👉 AI message bubble
+    answerBox.innerHTML += `<div class="ai-msg">${answer}</div>`;
+    scrollBottom();
+
+  } catch (err) {
+    document.querySelector(".typing")?.remove();
+
+    answerBox.innerHTML += `<div class="ai-msg">Error connecting AI</div>`;
+    scrollBottom();
+  }
+}
+
+
+// 🔥 auto scroll
+function scrollBottom() {
+  let box = document.getElementById("answer");
+  box.scrollTop = box.scrollHeight;
 }
