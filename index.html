@@ -6,15 +6,68 @@
 </head>
 <body>
 
-<h2>📖 Daily Verse</h2>
-<p id="verse">Loading...</p>
+<div class="app">
 
-<h2>💬 Ask Bible</h2>
-<input id="question" placeholder="Ask something...">
-<button onclick="askAI()">Ask</button>
+  <!-- Greeting -->
+  <p class="greeting-label">Daily Reflection</p>
+  <h1 class="greeting">Good Morning ✨</h1>
 
-<p id="answer"></p>
+  <!-- Verse Card -->
+  <div class="card">
+    <p class="label">Verse of the day</p>
+
+    <h2 class="verse">
+      “For I know the plans I have for you...”
+    </h2>
+
+    <div class="meta">
+      <span>Jeremiah 29:11</span>
+      <span>1 min read</span>
+    </div>
+  </div>
+
+  <!-- Topics -->
+  <div class="card">
+    <p class="label">Explore Topics</p>
+
+    <div class="topic-grid">
+      <div class="topic">
+        ✨
+        <span>Peace</span>
+      </div>
+
+      <div class="topic">
+        🙏
+        <span>Faith</span>
+      </div>
+
+      <div class="topic">
+        ❤️
+        <span>Love</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat -->
+  <div class="chat-box" id="answer"></div>
+
+</div>
+
+<!-- Input -->
+<div class="input-wrap">
+  <div class="input-bar">
+    <input id="question" placeholder="Ask something..." />
+    <button onclick="askAI()">➜</button>
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<div class="nav">
+  <a href="#">Home</a>
+  <a href="#">Chat</a>
+  <a href="#">Profile</a>
+</div>
 
 <script src="script.js"></script>
+
 </body>
-</html>
